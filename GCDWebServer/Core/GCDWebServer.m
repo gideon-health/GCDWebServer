@@ -356,7 +356,11 @@ static void _NetServiceRegisterCallBack(CFNetServiceRef service, CFStreamError* 
       GWS_LOG_VERBOSE(@"Bonjour registration complete for %@", [server class]);
       if (!CFNetServiceResolveWithTimeout(server->_resolutionService, kBonjourResolutionTimeout, NULL)) {
         GWS_LOG_ERROR(@"Failed starting Bonjour resolution");
-        GWS_DNOT_REACHED();
+          
+        // Disabling this because it is causing a crash in the client. Not
+        // sure what the author recommends in this case but for now let's just
+        // silently fail because this feature is opt-in.
+        // GWS_DNOT_REACHED();
       }
     }
   }
